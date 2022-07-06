@@ -1,0 +1,21 @@
+.btn_msg{
+    background-color: lightblue;
+    color: black;
+    padding: 8px 10px;
+    border: 1px solid black;
+    box-shadow: 10px 3px black;
+    margin: auto 20px auto 10px;
+    font-weight: bold;
+}
+
+
+.btn_comment{
+    background-color: lightblue;
+    color: black;
+    padding: 8px 10px;
+    border: 1px solid black;
+    box-shadow: 10px 3px black;
+    margin: auto 20px auto 10px;
+    font-weight: bold;
+}
+

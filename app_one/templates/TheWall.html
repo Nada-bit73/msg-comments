@@ -1,0 +1,91 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="d-flex justify-content-center justify-content-center container mb-3">
+    <div class="container align-items-center">
+        <div class="row ml-5 mt-1 ">
+            <div class="span6">
+                <form class="form center mt-1" action="/post_message" method='POST'>
+                    {% csrf_token %}
+                    <!-- post the msg -->
+                    <div class="row mb-3">
+                        <div class="container mt-5">
+                            <h2>post a message</h2>
+                            <textarea name="msg" rows="4" cols="130"></textarea>
+                        </div>
+                    </div>
+                    <div class="col ml-3 mr-3 g-2 pt-2 pr-2 text-right">
+                        <button class="btn_msg" type="submit" value="post">
+                            post a message
+                        </button>
+                    </div>
+                </form>
+                <!-- display messsage -->
+                {% for msg in msgs %}
+                <div class="row mb-3">
+                    <div class="container mt-5">
+                        <h4>{{ msg.user.first_name }} {{ msg.user.last_name }} - {{ msg.created_at|date:"F d Y"}}
+                        </h4>
+                        <p>{{ msg.message }}</p>
+                        {% if msg.user.id == user.id %}
+                        <form action="/delete_msg/{{ msg.id }}" method="POST">
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-info" type="submit" value="post">
+                                    delete
+                                </button>
+                            </div>
+                            {% csrf_token %}
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- display comment -->
+                <div class="row mb-1 ml-4 text-info">
+                    <div class="container mt-5">
+                        {% for comment in comments %}
+                        {% if comment in msg.msg.all %}
+                        <h4>{{ comment.user.first_name }} {{ comment.user.last_name }} {{ comment.created_at|date:"F d Y" }}</h4>
+                           
+                        <p>{{ comment.comment }}</p>
+                        {% if comment.user.id == user.id %}
+                        <form action="/delete_comment/{{ comment.id }}" method="POST">
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-danger" type="submit" value="post">
+                                    delete
+                                </button>
+                            </div>
+                            {% csrf_token %}
+                        </form>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- post comments -->
+                <form class="form center mt-1" action="/post_comment" method="POST">
+                    <input type="hidden" name="messageId" value="{{ msg.id }}">
+                    <div class="col-9 mb-3 ml-3 text-right">
+                        <div class="container mt-5 text-left mb-4">
+                            <label class="form-label">post a comment</label>
+                            <textarea class="form-control" name="comment" rows="3" cols="100"></textarea>
+                        </div>
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-end">
+                            <button class="btn_comment" type="submit" value="post">
+                                post a comment
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+{% endblock %}
+<!-- Jj@123456  -->
+<!-- Mm@123456 -->
